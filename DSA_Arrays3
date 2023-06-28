@@ -1,0 +1,225 @@
+//All codes are in C++ Programming Language
+1.Ans
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+    if(nums.size() < 3) return 0;
+    int closest = nums[0]+nums[1]+nums[2];
+    sort(nums.begin(), nums.end());
+    for(int first = 0 ; first < nums.size()-2 ; ++first) {
+        if(first > 0 && nums[first] == nums[first-1]) continue;
+        int second = first+1;
+        int third = nums.size()-1;            
+        while(second < third) {
+            int curSum = nums[first]+nums[second]+nums[third];
+            if(curSum == target) return curSum;
+            if(abs(target-curSum)<abs(target-closest)) {
+                closest = curSum;
+            }
+            if(curSum > target) {
+                --third;
+            } else {
+                ++second;
+            }
+        }
+    }
+    return closest;
+}
+};
+
+2.Ans
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+vector<vector<int>> fourSum(vector<int> &nums, int target, int n)
+{
+    vector<vector<int>> res;
+    return res;
+}
+
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> arr(n, 0);
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    int target;
+    cin >> target;
+    vector<vector<int>> ans = fourSum(arr, target, n);
+    sort(ans.begin(), ans.end(), [](auto &A, auto &B) {
+        int i = 0;
+        int j = 0;
+
+        while (i < A.size())
+        {
+            if (A[i] == B[j])
+            {
+                i++;
+                j++;
+            }
+            else
+                return A[i] < B[j];
+        }
+
+        return true;
+    });
+    for (auto &a : ans)
+    {
+        for (int ele : a)
+        {
+            cout << ele << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
+3.Ans
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int index = -1,n = nums.size();
+        for(int i=n-2;i>=0;i--){
+            if(nums[i]<nums[i+1]){
+                index = i;
+                break;
+            }
+        }
+        for(int i=n-1;i>index and index!=-1;i--){
+            if(nums[i]>nums[index]){
+                swap(nums[i],nums[index]);
+                break;
+            }
+        }
+        reverse(nums.begin()+index+1,nums.end());
+    }
+};
+4.Ans
+class Solution {
+public:
+    int searchInsert(vector<int>& nums, int target) {
+        int s=0;
+        int e=nums.size()-1;
+        int mid=s+(e-s)/2;
+
+        while(s<=e){
+            mid=s+(e-s)/2;
+            if(nums[mid]<target){
+                
+                   s=mid+1;
+            }
+            else if(nums[mid]>target){
+              e=mid-1;
+            }
+            else if(nums[mid]==target){
+                return mid;
+            }
+
+        }
+        if(target>nums[mid]){
+            return mid+1;
+        }
+
+        else{
+            return mid;
+        }
+    }
+};
+
+5.Ans
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+    int end=digits.size()-1;
+    for(int i=end;i>=0;i--){
+        if(digits[i]<9){
+            digits[i]++;
+            return digits;
+
+        }
+        else{
+            digits[i]=0;
+        }
+
+    }
+    if(digits[0]==0){
+        digits.insert(digits.begin(),1);
+    }
+    return digits;
+    }
+};
+6.Ans
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int xxor=0;
+        for(int i=0;i<nums.size();i++){
+            xxor=xxor^nums[i];
+        }
+        return xxor;
+    }
+};
+7.Ans
+class Solution:
+    def findMissingRanges(self, nums: List[int], lower: int, upper: int) -> List[str]:
+        '''
+        1. 
+        
+        '''
+        
+        if not nums:
+            return [self.formRange(lower, upper)]
+        res = []
+        if nums[0] > lower:
+            res.append(self.formRange(lower, nums[0]-1))
+        
+        for i in range(len(nums)-1):
+            if nums[i+1] != nums[i] and nums[i+1] > nums[i] +1:
+                res.append(self.formRange(nums[i]+1, nums[i+1]-1))
+        
+        if nums[-1] < upper:
+            res.append(self.formRange(nums[-1]+1, upper))
+        return res
+            
+        
+    def formRange(self, low, high):
+        if low == high:
+            return str(low)
+        else:
+            print(str(low)+ "->"+ str(high))
+            return str(low)+ "->"+ str(high)
+8.Ans
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        if (intervals.empty()) { return 0; }
+        sort(intervals.begin(), intervals.end(), [](const vector<int>& a, const vector<int>& b)->bool {
+            return a[0] < b[0];
+            });
+        
+        int len = intervals.size();
+        int count = 1;//the Max of intervals to keep, must be initially, bc we can always keep at least 1 interval
+        int j = 0;// the last interval to look at
+        for(int i = 1; i < len; i++){
+            if(intervals[j][1] > intervals[i][0]){//if overlap
+                if(intervals[j][1]  > intervals[i][1]){
+                    //end point of interval j is after interval i, keep interval i
+                    j=i;
+                }else{
+                    //otherwise, we keep j
+                }
+            }
+            else{//if no overlap
+                j = i;
+                count++;
+            }
+        }
+        return len - count;
+    }
+};
