@@ -1,1 +1,144 @@
+Questions Link: https://pwskills.notion.site/Assignment-Questions-5-fcdc859d534e4784a69f89ea83174b85
+1.Ans
+class Solution {
+public:
+    vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {
+        vector<vector<int>> arr(m,vector<int> (n));
+        if(m*n!=original.size()){
+            arr.clear();
+            return arr;
+        }else{
+        for(int i=0;i<original.size();i++){
+            arr[i/n][i%n]=original[i];
+        }}
+        return arr;
+    }
+};
 
+2.Ans
+class Solution {
+public:
+    int arrangeCoins(int n) {
+        int i=1;
+        int row=0;
+       
+        while(n-i>=0){
+           
+            row++;
+            n=n-i;
+            i++;
+
+        }
+    return row; 
+    }
+};
+3.Ans
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        vector<int> arr;
+        for(int i=0;i<nums.size();i++){
+            arr.push_back((nums[i]*nums[i]));
+        }
+        sort(arr.begin(),arr.end());
+    return arr;
+   
+    }
+    
+};
+4.Ans
+class Solution {
+public:
+    vector<vector<int>> findDifference(vector<int>& nums1, vector<int>& nums2) {
+        
+        unordered_set<int> set1(nums1.begin(),nums1.end());
+        unordered_set<int> set2(nums2.begin(),nums2.end());
+        vector<int> dist_num1,dist_num2;
+        for(int num:set1){
+            if(set2.count(num)==0){
+                dist_num1.push_back(num);
+            }
+        }
+        for(int num:set2){
+            if(set1.count(num)==0){
+                dist_num2.push_back(num);
+            }
+        }
+        return {dist_num1,dist_num2};
+
+
+    }
+};
+5.Ans
+class Solution {
+public:
+    int findTheDistanceValue(vector<int>& arr1, vector<int>& arr2, int d) {
+        int dist=0;
+        for(int i=0;i<arr1.size();i++){
+            int count=0;
+            for(int j=0;j<arr2.size();j++){
+                if(abs(arr1[i]-arr2[j])>d){
+                    count++;
+                }
+            }
+            if(count==arr2.size()){
+                dist=dist+1;
+            }
+     }
+     return dist;
+    }
+};
+6.Ans
+class Solution {
+public:
+    vector<int> findDuplicates(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        vector<int>ans;
+        for(int i=0;i<nums.size()-1;i++){
+            if(nums[i]==nums[i+1]){
+                ans.push_back(nums[i]);
+            }
+        }
+       return ans; 
+    }
+};
+7.Ans
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        int low=0; int high=nums.size()-1;
+        while(low<high){
+            if(nums[low]<nums[high]){
+
+                return nums[low];
+            }
+            int mid=(low+high)/2;
+            if(nums[mid]>=nums[low]){
+                low=mid+1;
+            }else{
+                high=mid;
+            }
+        }
+        return nums[low];    }
+};
+
+8.Ans
+class Solution {
+ public:
+  vector<int> findOriginalArray(vector<int>& changed) {
+    vector<int> ans;
+    queue<int> q;
+
+    sort(changed.begin(), changed.end());
+
+    for (const int num : changed)
+      if (!q.empty() && num == q.front()) {
+        q.pop();
+      } else {
+        q.push(num * 2);
+        ans.push_back(num);
+      }
+
+    return q.empty() ? ans : vector<int>();
+  }
+};
